@@ -8,12 +8,10 @@ import { PieService } from 'src/app/services/pie.service';
 
 @Component({
   standalone: true,
-  imports: [
-    MatButtonModule,
-  ],
+  imports: [MatButtonModule],
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrls: ['./card.component.css'],
 })
 export class CardComponent {
   @Input() pie!: Pie;
@@ -23,10 +21,10 @@ export class CardComponent {
   readonly pieService = inject(PieService);
 
   selectPie(pie: Pie) {
-    this.pieService.setSelectedCategory(pie.category);
-    this.pieService.setSelectedPie(pie.id);
-    this.router.navigate([`../${ROUTER_TOKENS.SHOP}`], {
-      relativeTo: this.activatedRoute
+    this.router.navigate([`../${ROUTER_TOKENS.SHOP}`, pie.category], {
+      relativeTo: this.activatedRoute,
+      queryParams: { productId: pie.id },
+      queryParamsHandling: 'merge',
     });
   }
 }
